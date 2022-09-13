@@ -29,4 +29,9 @@ public class EmployeePayrollService {
 		double salary=sc.nextDouble();
 		employeePayrollList.add(new EmployeePayrollData(id, name, salary));
 	}
+	public void printData(IOService ioService) {
+		if(ioService.equals(IOService.FILE_IO)) {
+			new EmployeePayrollFileIOService().printdata();
+		}
+	}
 }
