@@ -6,24 +6,21 @@ import java.util.Scanner;
 
 public class EmployeePayrollService {
 	public enum IOService {
-		CONSOLE_IO;
+		CONSOLE_IO,FILE_IO;
 	}
-	private List<EmployeePayrollData> employeePayrollList;
+	public List<EmployeePayrollData> employeePayrollList;
 	public EmployeePayrollService(List<EmployeePayrollData> employeePayrollList) {
 		this.employeePayrollList=employeePayrollList;
 	}
-	public static void main(String[] args) {
-		ArrayList<EmployeePayrollData> employeePayrollList=new ArrayList<>();
-		EmployeePayrollService employeePayrollService=new EmployeePayrollService(employeePayrollList);
-		Scanner sc=new Scanner(System.in);
-		employeePayrollService.readEmployeePayrollData(sc);
-		employeePayrollService.writeEmployeePayrollData();
+	public int writeEmployeePayrollData(IOService ioService) {
+		if(ioService.equals(IOService.CONSOLE_IO)) {
+			System.out.println("\nWriting Employee Payroll to Console\n"+employeePayrollList);
+		} else if(ioService.equals(IOService.FILE_IO)) {
+			new EmployeePayrollFileIOService().writeData(employeePayrollList);
+		}
+		return employeePayrollList.size();
 	}
-	private void writeEmployeePayrollData() {
-		System.out.println("\nWriting Employee Payroll to Console\n"+employeePayrollList);
-		
-	}
-	private void readEmployeePayrollData(Scanner sc) {
+	public void readEmployeePayrollData(Scanner sc) {
 		System.out.println("Enter Employee id");
 		int id=sc.nextInt();
 		System.out.println("Enter Employee Name");
@@ -32,5 +29,4 @@ public class EmployeePayrollService {
 		double salary=sc.nextDouble();
 		employeePayrollList.add(new EmployeePayrollData(id, name, salary));
 	}
-
 }
